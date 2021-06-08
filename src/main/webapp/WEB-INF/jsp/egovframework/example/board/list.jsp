@@ -3,6 +3,8 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -55,9 +57,6 @@
 				<div class="table-responsive">
 					<table class="table  table-hover">
 					<thead>
-					<tr>
-						<td colspan="5">전체 게시글 수 : ${pagination.count }</td>
-					</tr>
 				      <tr>
 				        <th>게시물번호</th>
 				        <th>제목</th>
@@ -79,14 +78,19 @@
 				    </tbody>
 					</table>
 				</div>
-			 </div>
+				<div id="paging">
+						<ul class="pagination">
+		  					<span class="badge">${paginationInfo.totalRecordCount}</span>
+	      				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="page" />
+	      				</ul>
+				</div>
+				
+							 
+			</div>
 		 <div class="panel-footer">
 		 <c:if test="${!empty sessionScope.userId }">
 			<button type="button" class="btn btn-default" onclick="add();">등록</button>
 		 </c:if>
-		 
-		 
-		 
 		 </div>
 	</div>
 </div>
@@ -129,6 +133,11 @@ function check(){
 function out() {
 	location.href = "<c:url value='/logout.do'/>";
 }
+
+function page(pageNo){
+	location.href = "<c:url value='/list.do'/>?pageIndex="+pageNo;
+}
+
 </script>
 </body>
 

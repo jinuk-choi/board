@@ -15,9 +15,9 @@
  */
 package egovframework.example.board.service;
 
+import egovframework.example.sample.service.SampleDefaultVO;
 
-
-public class BoardVO  {
+public class BoardVO  extends SampleDefaultVO  {
 
 	private String idx;
 	private String title;
@@ -29,6 +29,8 @@ public class BoardVO  {
 	private String userId;
 	private String password;
 	private String user_name;
+	
+	
 	
 	
 	

@@ -1,44 +1,57 @@
 package egovframework.example.board.web;
 
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
-import egovframework.example.board.service.Pagination;
+import egovframework.example.sample.service.SampleDefaultVO;
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
 public class BoardController {
 	BoardVO boardVO = null;
 	List<?> list = null;
-	Pagination pagination;
-	int count = 0;
-	int page = 1;
+
 	
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
+	/** EgovPropertyService */
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertiesService;
 	
 	@RequestMapping(value = "/list.do")
-	public String list(ModelMap model
-						) throws Exception {
+	public String list(ModelMap model,
+		@ModelAttribute("boardVO") BoardVO boardVO	) throws Exception {
+		
+		/** EgovPropertyService.sample */
+		boardVO.setPageUnit(propertiesService.getInt("pageUnit"));
+		boardVO.setPageSize(propertiesService.getInt("pageSize"));
+	
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(boardVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(boardVO.getPageUnit());
+		paginationInfo.setPageSize(boardVO.getPageSize());
 
+		boardVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		boardVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
+		list = boardService.selectBoardList(boardVO);
+		int totCnt = boardService.selectBoardListTotCnt(boardVO);
+		paginationInfo.setTotalRecordCount(totCnt);
 		
-		count = boardService.selectBoardListTotCnt(boardVO);
-		pagination = new Pagination(page, count);
-		list = boardService.selectBoardList(pagination);
 		
 		model.addAttribute("resultList", list);
-		model.addAttribute("pagination", pagination);
+		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "board/list";
 	}
@@ -49,7 +62,7 @@ public class BoardController {
 		boardVO = boardService.selectBoard(idx);
 		boardService.BoardCount(boardVO);
 		
-		list = boardService.selectBoardList(pagination);
+		list = boardService.selectBoardList(boardVO);
 		
 		model.addAttribute("boardVO",boardVO);
 		model.addAttribute("resultList", list);
@@ -59,7 +72,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/mgmt.do")
 	public String mgmt(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
-		list = boardService.selectBoardList(pagination);
+		list = boardService.selectBoardList(boardVO);
 		
 		model.addAttribute("boardVO", boardVO);
 		
@@ -69,7 +82,7 @@ public class BoardController {
 	@RequestMapping(value = "/insert.do")
 	public String Insert(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		boardService.insertBoard(boardVO);
-		list = boardService.selectBoardList(pagination);
+		list = boardService.selectBoardList(boardVO);
 		
 		model.addAttribute("resultList", list);
 		model.addAttribute("board", boardVO);
@@ -80,7 +93,7 @@ public class BoardController {
 	@RequestMapping(value = "/edit.do")
 	public String Edit(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		boardService.updateBoard(boardVO);
-		list = boardService.selectBoardList(pagination);
+		list = boardService.selectBoardList(boardVO);
 		
 		model.addAttribute("resultList", list);
 		model.addAttribute("board", boardVO);

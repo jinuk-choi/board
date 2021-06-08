@@ -18,7 +18,6 @@ package egovframework.example.board.service.impl;
 import java.util.List;
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
-import egovframework.example.board.service.Pagination;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
@@ -34,8 +33,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		private BoardMapper boardDAO;
 
 
-  public List<?> selectBoardList(Pagination pagination) throws Exception {
-		return boardDAO.selectBoardList(pagination);
+  public List<?> selectBoardList(BoardVO searchVO) throws Exception {
+		return boardDAO.selectBoardList(searchVO);
 	}
 
 		
@@ -60,8 +59,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardDAO.selectBoard(idx);
 	}
 	
-	public int selectBoardListTotCnt(BoardVO vo) {
-		return boardDAO.selectBoardListTotCnt(vo);
+	public int selectBoardListTotCnt(BoardVO searchVO) {
+		return boardDAO.selectBoardListTotCnt(searchVO);
 	}
 	
 	public void BoardCount(BoardVO vo) {

@@ -20,7 +20,7 @@ import java.util.List;
 
 public interface BoardService {
 
-	List<?> selectBoardList(Pagination pagination) throws Exception;
+	List<?> selectBoardList(BoardVO searchVO) throws Exception;
 
 	String insertBoard(BoardVO vo) throws Exception;
 
@@ -30,7 +30,7 @@ public interface BoardService {
 
 	BoardVO selectBoard(int idx) throws Exception;
 	
-	int selectBoardListTotCnt(BoardVO vo);
+	int selectBoardListTotCnt(BoardVO searchVO);
 	
 	void BoardCount(BoardVO vo);
 	

@@ -53,6 +53,10 @@ public class SampleDefaultVO implements Serializable {
 
 	/** 현재페이지 */
 	private int pageIndex = 1;
+	
+
+
+	private int totCnt;
 
 	/** 페이지갯수 */
 	private int pageUnit = 10;
@@ -68,6 +72,14 @@ public class SampleDefaultVO implements Serializable {
 
 	/** recordCountPerPage */
 	private int recordCountPerPage = 10;
+	
+	public int getTotCnt() {
+		return totCnt;
+	}
+
+	public void setTotCnt(int totCnt) {
+		this.totCnt = totCnt;
+	}
 
 	public int getFirstIndex() {
 		return firstIndex;

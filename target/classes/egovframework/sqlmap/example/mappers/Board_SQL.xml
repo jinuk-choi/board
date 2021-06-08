@@ -9,8 +9,9 @@
 			SELECT	@ROWNUM := @ROWNUM - 1 AS ROWNUM,
 					ta.*
 			FROM 	TB_BOARD ta,
-					(SELECT @rownum := (SELECT	COUNT(*)-#{pageNum}+1 FROM tb_board ta)) tc		
-			LIMIT	#{pageNum},3
+					(SELECT @rownum := (SELECT	COUNT(*)-#{firstIndex}+1 FROM tb_board ta)) tc		
+			
+			LIMIT	#{firstIndex}, #{recordCountPerPage}
 		
 	</select>
 	<!-- <if test="searchKeyword != null and searchKeyword != ''">
@@ -68,10 +69,10 @@
 	</select>
 
 <!-- 게시글 갯수 -->
-	<select id="selectBoardListTotCnt" resultType="int">
+	<select id="selectBoardListTotCnt"  parameterType="boardVO" resultType="int">
 
-			SELECT COUNT(*) count
-			FROM TB_BOARD
+			SELECT COUNT(*) totcnt
+			FROM TB_BOARD A 
 			WHERE 1=1
 			
 	</select>

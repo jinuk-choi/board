@@ -18,7 +18,6 @@ package egovframework.example.board.service.impl;
 import java.util.List;
 
 import egovframework.example.board.service.BoardVO;
-import egovframework.example.board.service.Pagination;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 /**
@@ -39,7 +38,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("boardMapper")
 public interface BoardMapper {
 
-	List<?> selectBoardList(Pagination pagination) throws Exception;
+	List<?> selectBoardList(BoardVO searchVO) throws Exception;
 	
 	void insertBoard(BoardVO vo) throws Exception;
 	
