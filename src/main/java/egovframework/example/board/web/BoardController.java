@@ -1,16 +1,19 @@
 package egovframework.example.board.web;
 
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
-import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -62,7 +65,7 @@ public class BoardController {
 		boardVO = boardService.selectBoard(idx);
 		boardService.BoardCount(boardVO);
 		
-		list = boardService.selectBoardList(boardVO);
+		List<?> list = boardService.selectReplyList(boardVO);
 		
 		model.addAttribute("boardVO",boardVO);
 		model.addAttribute("resultList", list);
@@ -110,6 +113,33 @@ public class BoardController {
 		return "redirect:/list.do";
 	}
 	
+	@RequestMapping(value = "/reply.do", method = RequestMethod.POST)
+	public String reply(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		boardService.insertReply(boardVO);
+		
+		return "redirect:/view.do?idx="+boardVO.getIdx();
+	}
+	
+	@RequestMapping(value = "/dreply.do")
+	public String dreply(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		boardService.replyDelete(boardVO);
+		
+		return "redirect:/view.do?idx="+boardVO.getIdx();
+	}
+	
+	@RequestMapping(value = "/edreply.do", method = RequestMethod.POST)
+	public String editReply(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		boardService.editComment(boardVO);
+		List<?> list = boardService.selectReplyList(boardVO);
+		
+		
+		model.addAttribute("boardVO",boardVO);
+		
+		return "board/commentList";
+	}
 	
 	
 	

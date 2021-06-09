@@ -35,5 +35,15 @@ public interface BoardService {
 	void BoardCount(BoardVO vo);
 	
 	String selectLoginCheck(BoardVO vo);
+	
+	List<?> selectReplyList(BoardVO searchVO) throws Exception;
+	
+	void insertReply(BoardVO vo) throws Exception;
+	
+	int replyCount(BoardVO vo);
+	
+	void replyDelete(BoardVO vo) throws Exception;
+	
+	void editComment(BoardVO vo) throws Exception;
 
 }

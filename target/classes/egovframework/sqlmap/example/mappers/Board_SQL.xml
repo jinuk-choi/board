@@ -85,6 +85,59 @@
 			WHERE IDX=#{idx}
 			
 	</update>
+
+<!-- 댓글작성 -->
+	<insert id="insertReply" parameterType="boardVO">
+
+			INSERT INTO TB_REPLY
+				( IDX
+				  , SEQ
+				  , REPLY
+				  , WRITER )
+			VALUES ( #{idx}
+				  , (SELECT IFNULL(MAX(X.SEQ)+1,1) FROM TB_REPLY X WHERE X.IDX = #{idx})
+				  , #{reply, jdbcType=VARCHAR}
+				  , #{writer, jdbcType=VARCHAR} )
+
+	</insert>
+
+<!-- 댓글리스트 -->
+	<select id="selectReplyList" parameterType="boardVO" resultType="egovMap">
+
+			SELECT
+				A.IDX as idx
+				  , A.SEQ as seq
+				  , A.REPLY as reply
+				  , A.WRITER as writer
+				  , A.INDATE as indate
+			FROM TB_REPLY A
+			WHERE 1=1
+			AND	A.IDX = #{idx}
+			ORDER BY A.SEQ ASC
+	</select>
+
+<!-- 댓글 갯수 -->
+<select id="replyCount"  resultType="int">
+    	  SELECT COUNT(*)	count	             
+	      FROM           	tb_reply	  
+	      WHERE			 IDX = #{idx}				  	  		   	
+	      
+</select>
+
+<!-- 댓글 삭제 -->
+<delete id="replyDelete" parameterType="boardVO">
+    	 DELETE FROM tb_reply
+    	 WHERE		 seq = #{seq}  		   	
+</delete>
+
+<!-- 댓글 수정 -->
+<update id="editComment" parameterType="boardVO">
+	UPDATE  tb_reply
+	SET		reply = #{reply}
+	WHERE	seq = #{seq}	   	
+	      
+</update>
+
 	
 <!-- 로그인 체크 -->	
 	<select id="selectLoginCheck" parameterType="boardVo" resultType="String">

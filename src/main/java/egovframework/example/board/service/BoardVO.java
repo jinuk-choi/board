@@ -26,9 +26,14 @@ public class BoardVO  extends SampleDefaultVO  {
 	private String writer;
 	private String indate;
 	private int rownum;
+	
 	private String userId;
 	private String password;
 	private String user_name;
+	
+	private String seq;
+	private String reply;
+
 	
 	
 	
@@ -96,6 +101,20 @@ public class BoardVO  extends SampleDefaultVO  {
 	public void setIndate(String indate) {
 		this.indate = indate;
 	}
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
+	public String getReply() {
+		return reply;
+	}
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+	
+	
 	
 	
 
