@@ -46,12 +46,12 @@
 		</c:if>				 
 		</div>
 			<div class="panel-body">
-			<form class="form-inline" action="/list.do">
-			 	<div class="form-group">
-			    	<label for="id">제목(내용):</label>
-			    	<input type="text" class="form-control" id="searchName">
-			 	</div>		
-					<button type="submit" class="btn btn-default">검색</button>
+			<form class="form-inline" method="post" action="<c:url value='/list.do'/>">
+		  		<div class="form-group">
+			    	<label for="searchKeyword">제목(내용):</label>
+			 	    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" value="${searchKeyword }">
+		  		</div>
+		 			<button type="submit" class="btn btn-default">검색</button>
 			</form>
 					 
 				<div class="table-responsive">

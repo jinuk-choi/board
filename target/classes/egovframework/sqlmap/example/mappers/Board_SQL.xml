@@ -7,23 +7,24 @@
 	<select id="selectBoardList" parameterType="boardVo" resultType="egovMap">
 	
 			SELECT	@ROWNUM := @ROWNUM - 1 AS ROWNUM,
-					ta.*
-			FROM 	TB_BOARD ta,
-					(SELECT @rownum := (SELECT	COUNT(*)-#{firstIndex}+1 FROM tb_board ta)) tc		
-			
+					A.IDX as idx
+				  , A.TITLE as title
+				  , A.CONTENTS as contents
+				  , IFNULL(A.COUNT,0) as count
+				  , A.WRITER as writer
+				  , A.INDATE as indate
+			FROM 	TB_BOARD A,
+					(SELECT @rownum := (SELECT	COUNT(*)-#{firstIndex}+1 FROM tb_board A)) tc		
+			WHERE 1=1			
+			<if test="searchKeyword != null and searchKeyword != ''">
+	        AND	(A.TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+							OR	A.CONTENTS LIKE CONCAT('%',#{searchKeyword},'%')
+							)
+			</if>
 			LIMIT	#{firstIndex}, #{recordCountPerPage}
 		
 	</select>
-	<!-- <if test="searchKeyword != null and searchKeyword != ''">
-		        <choose>
-		            <when test="searchCondition == 0">
-						AND	ID LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 1">
-						AND	NAME LIKE '%' || #{searchKeyword} || '%'
-					</when>
-				</choose>
-			</if> -->
+	
 	
 <!-- 게시글 작성하기 -->			
 	<insert id="insertBoard" parameterType="boardVO">
@@ -74,7 +75,11 @@
 			SELECT COUNT(*) totcnt
 			FROM TB_BOARD A 
 			WHERE 1=1
-			
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        AND	(A.TITLE LIKE CONCAT('%',#{searchKeyword},'%')
+					OR	A.CONTENTS LIKE CONCAT('%',#{searchKeyword},'%')
+					)
+			</if>
 	</select>
 	
 <!-- 조회수 -->	
