@@ -71,7 +71,7 @@
 				        <td><c:out value="${result.rownum}"/></td>
 				        <td><a href="<c:url value='/view.do?idx=${result.idx}'/>"><c:out value="${result.title}"/></a></td>
 				        <td><c:out value="${result.count}"/></td>
-				        <td><c:out value="${result.writer}"/></td>
+				        <td><c:out value="${result.writerNm}"/></td>
 				        <td><c:out value="${result.indate}"/></td>
 				      </tr>
 				    </c:forEach> 

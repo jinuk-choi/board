@@ -24,6 +24,7 @@ public class BoardVO  extends SampleDefaultVO  {
 	private String contents;
 	private int count;
 	private String writer;
+	private String writerNm;
 	private String indate;
 	private int rownum;
 	
@@ -31,8 +32,11 @@ public class BoardVO  extends SampleDefaultVO  {
 	private String password;
 	private String user_name;
 	
-	private String seq;
+	private int seq;
 	private String reply;
+	private int bDepth;
+	private int bOrder;
+	private int bGroup;
 
 	
 	
@@ -101,10 +105,10 @@ public class BoardVO  extends SampleDefaultVO  {
 	public void setIndate(String indate) {
 		this.indate = indate;
 	}
-	public String getSeq() {
+	public int getSeq() {
 		return seq;
 	}
-	public void setSeq(String seq) {
+	public void setSeq(int seq) {
 		this.seq = seq;
 	}
 	public String getReply() {
@@ -113,7 +117,31 @@ public class BoardVO  extends SampleDefaultVO  {
 	public void setReply(String reply) {
 		this.reply = reply;
 	}
-	
+	public String getWriterNm() {
+		return writerNm;
+	}
+	public void setWriterNm(String writerNm) {
+		this.writerNm = writerNm;
+	}
+	public int getbDepth() {
+		return bDepth;
+	}
+	public void setbDepth(int bDepth) {
+		this.bDepth = bDepth;
+	}
+	public int getbOrder() {
+		return bOrder;
+	}
+	public void setbOrder(int bOrder) {
+		this.bOrder = bOrder;
+	}
+	public int getbGroup() {
+		return bGroup;
+	}
+	public void setbGroup(int bGroup) {
+		this.bGroup = bGroup;
+	}
+
 	
 	
 	

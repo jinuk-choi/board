@@ -13,7 +13,9 @@
 				  , IFNULL(A.COUNT,0) as count
 				  , A.WRITER as writer
 				  , A.INDATE as indate
-			FROM 	TB_BOARD A,
+				  , B.USER_NAME as writerNm
+			FROM 	TB_BOARD A
+			LEFT JOIN TB_USER B ON A.WRITER = B.USER_ID,
 					(SELECT @rownum := (SELECT	COUNT(*)-#{firstIndex}+1 FROM tb_board A)) tc		
 			WHERE 1=1			
 			<if test="searchKeyword != null and searchKeyword != ''">
@@ -96,15 +98,31 @@
 
 			INSERT INTO TB_REPLY
 				( IDX
-				  , SEQ
 				  , REPLY
-				  , WRITER )
+				  , WRITER
+				  , b_group
+			  	  , b_order
+			      , b_depth )
 			VALUES ( #{idx}
-				  , (SELECT IFNULL(MAX(X.SEQ)+1,1) FROM TB_REPLY X WHERE X.IDX = #{idx})
 				  , #{reply, jdbcType=VARCHAR}
-				  , #{writer, jdbcType=VARCHAR} )
+				  , #{writer, jdbcType=VARCHAR} 
+				  , #{bGroup}
+				  , #{bOrder}
+				  , #{bDepth} + 1 )
+				  
+		<selectKey keyProperty="seq" resultType="Integer">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>	
 
 	</insert>
+	
+	<update id="updateComment" parameterType="boardVO" >
+		UPDATE tb_reply SET b_group = LAST_INSERT_ID() WHERE seq = LAST_INSERT_ID()
+	</update>
+
+	<update id="updateReComment" parameterType="boardVO" >
+		UPDATE tb_reply SET b_order = b_order + 1 where b_group = #{bGroup} and b_order >= #{bOrder} and seq != last_insert_id()
+	</update> 
 
 <!-- 댓글리스트 -->
 	<select id="selectReplyList" parameterType="boardVO" resultType="egovMap">
@@ -115,15 +133,19 @@
 				  , A.REPLY as reply
 				  , A.WRITER as writer
 				  , A.INDATE as indate
+				  , A.B_GROUP as bGroup
+				  , A.B_DEPTH as bDepth
+				  , A.B_ORDER as bOrder
 			FROM TB_REPLY A
 			WHERE 1=1
 			AND	A.IDX = #{idx}
-			ORDER BY A.SEQ ASC
+			ORDER BY	b_group DESC, b_order DESC	
+			LIMIT	#{firstIndex}, #{recordCountPerPage}
 	</select>
 
 <!-- 댓글 갯수 -->
-<select id="replyCount"  resultType="int">
-    	  SELECT COUNT(*)	count	             
+<select id="replyCount" parameterType="boardVO"  resultType="int">
+    	  SELECT COUNT(*)	totcnt	             
 	      FROM           	tb_reply	  
 	      WHERE			 IDX = #{idx}				  	  		   	
 	      

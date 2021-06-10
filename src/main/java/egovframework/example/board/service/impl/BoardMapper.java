@@ -58,11 +58,15 @@ public interface BoardMapper {
 	
 	void insertReply(BoardVO vo) throws Exception;
 	
-	int replyCount(BoardVO vo);
+	int replyCount(BoardVO searchVO);
 	
 	void replyDelete(BoardVO vo) throws Exception;
 	
 	void editComment(BoardVO vo) throws Exception;
+	
+	void updateComment(BoardVO vo) throws Exception;
+	
+	void updateReComment(BoardVO vo) throws Exception;
 
 
 }

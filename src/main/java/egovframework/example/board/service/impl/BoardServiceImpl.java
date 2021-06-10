@@ -75,14 +75,21 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		LOGGER.debug(vo.toString());
 		
 		boardDAO.insertReply(vo);
+		
+		if (vo.getbGroup() == 0) {
+			boardDAO.updateComment(vo);
+		
+		} else { 
+			boardDAO.updateReComment(vo);
+		}
 	}
 	
 	public String selectLoginCheck(BoardVO vo) {
 		return boardDAO.selectLoginCheck(vo);
 	}
 	
-	public int replyCount(BoardVO vo) {
-		return boardDAO.replyCount(vo);
+	public int replyCount(BoardVO searchVO) {
+		return boardDAO.replyCount(searchVO);
 	}
 	
 	public void replyDelete(BoardVO vo) throws Exception {

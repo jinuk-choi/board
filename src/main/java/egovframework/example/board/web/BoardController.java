@@ -60,15 +60,35 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/view.do")
-	public String View(@RequestParam("idx") int idx,ModelMap model) throws Exception {
+	public String View(@RequestParam("idx") int idx,
+					   @ModelAttribute("boardVO") BoardVO boardVO,
+					   ModelMap model) throws Exception {
+		
+		/** EgovPropertyService.sample */
+		boardVO.setPageUnit(propertiesService.getInt("pageUnit"));
+		boardVO.setPageSize(propertiesService.getInt("pageSize"));
+	
+		/** pageing setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(boardVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(boardVO.getPageUnit());
+		paginationInfo.setPageSize(boardVO.getPageSize());
+
+		boardVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		boardVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		boardVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		List<?> list = boardService.selectReplyList(boardVO);
+		model.addAttribute("resultList", list);
+		
+		int totCnt = boardService.replyCount(boardVO);
+		paginationInfo.setTotalRecordCount(totCnt);
 		
 		boardVO = boardService.selectBoard(idx);
 		boardService.BoardCount(boardVO);
 		
-		List<?> list = boardService.selectReplyList(boardVO);
-		
 		model.addAttribute("boardVO",boardVO);
-		model.addAttribute("resultList", list);
+		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "board/view";
 	}
@@ -117,6 +137,10 @@ public class BoardController {
 	public String reply(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		
 		boardService.insertReply(boardVO);
+		List<?> list = boardService.selectReplyList(boardVO);
+		
+		
+		model.addAttribute("resultList", list);
 		
 		return "redirect:/view.do?idx="+boardVO.getIdx();
 	}
@@ -136,7 +160,18 @@ public class BoardController {
 		List<?> list = boardService.selectReplyList(boardVO);
 		
 		
-		model.addAttribute("boardVO",boardVO);
+		model.addAttribute("resultList", list);
+		
+		return "board/commentList";
+	}
+	
+	@RequestMapping(value = "/reinsert.do", method = RequestMethod.POST)
+	public String reReply(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		boardService.insertReply(boardVO);
+		List<?> list = boardService.selectReplyList(boardVO);
+		
+		model.addAttribute("resultList", list);
 		
 		return "board/commentList";
 	}

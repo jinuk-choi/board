@@ -60,6 +60,14 @@
 		<c:forEach var="result" items="${resultList}" varStatus="status">
 			<div class="well well-sm">
 				<c:out value="${result.writer}"/> / <c:out value="${result.indate}"/>
+				<c:if test="${result.bDepth > 1 }">
+					<c:forEach begin="2" end="${result.bDepth}">
+						&nbsp;&nbsp;
+					</c:forEach>
+					<c:forEach begin="2" end="${result.bDepth}">
+						┕
+					</c:forEach>
+				</c:if>
 				<c:out value="${fn:replace(result.reply, crcn, br)}" escapeXml="false"/>
 				<div><button type="button" class="btn-Insert">답글</button></div>
 				<div><button type="button" class="btn-Edit">수정</button></div>
@@ -72,12 +80,18 @@
 					<div><a href="">취소</a></div>
 			</div>
 			 <div class="myFlex" style="display: none;">
-				<div>작성자 : ${result.writer}</div>&emsp;&emsp;
+				<div>작성자 : ${sessionScope.userName }</div>&emsp;&emsp;
 				<div>내용 : <textarea rows="1" cols="50"  class="insertcon">${fn:replace(result.reply, crcn, br)}</textarea></div>&emsp;&emsp;
-				<div><button type="button" class="btnInForm" idx="${result.idx}" >등록</button></div>
+				<div><button type="button" class="btnInForm" idx="${result.idx}" b_group="${result.bGroup}" b_order="${result.bOrder}"  b_depth="${result.bDepth}" >등록</button></div>
 					<div><a href="">취소</a></div>
 			</div>	
 		</c:forEach>
+		</div>
+		<div id="paging">
+			<ul class="pagination">
+					<span class="badge">${paginationInfo.totalRecordCount}</span>
+   				<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="page" />
+   			</ul>
 		</div>
 		 <div class="well well-lg">
 			 <form class="form-horizontal" id="form2" name="form2" method="post" action="reply.do">	
@@ -132,6 +146,7 @@ function add(){
 	document.form2.action = "<c:url value='/reply.do'/>?idx=${boardVO.idx}";
 	document.form2.submit();
 }
+
 function redel(seq,idx){
 	
 	if( !confirm("삭제하시겠습니까?") ){
@@ -142,13 +157,13 @@ function redel(seq,idx){
 }
 $(document).on('click', '.btn-Insert', function () {
 	let viewDiv = $(this).parent().parent();
-	viewDiv.next().show();
+	viewDiv.next().next().show();
 	viewDiv.hide();
 });
 
 $(document).on('click', '.btn-Edit', function () {
 	let viewDiv = $(this).parent().parent();
-	viewDiv.next().next().show();
+	viewDiv.next().show();
 	viewDiv.hide();
 });
 
@@ -174,6 +189,38 @@ $(document).on('click', '.btnEditForm', function () {
 	 	 $('#commentList').html(data);
 	});
 });
+
+/*답글 작성*/
+$(document).on('click', '.btnInForm', function () {
+	let insertcon = $(this).parent().prev().find('.insertcon').val();
+	let uIdx = '${sessionScope.userName }';
+	let idx = $(this).attr('idx');
+	let b_depth = $(this).attr('b_depth');
+	let b_order = $(this).attr('b_order');
+	let b_group = $(this).attr('b_group');
+
+	$.ajax({
+		 method: "POST",
+		 url: "<c:url value='/reinsert.do'/>",
+		 data: { 
+	
+			 reply: insertcon,
+			 writer: uIdx,
+			 idx: idx,
+			 bDepth: b_depth,
+			 bOrder: b_order,
+			 bGroup: b_group		 	 
+
+		 }
+	})
+	.done(function( data ) {
+	 	 console.log(data);
+	 	 $('#commentList').html(data);
+	});
+});
+function page(pageNo){
+	location.href = "<c:url value='/view.do'/>?idx=${boardVO.idx}&pageIndex="+pageNo;
+}
 
 </script>	
 </body>

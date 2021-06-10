@@ -40,7 +40,7 @@ public interface BoardService {
 	
 	void insertReply(BoardVO vo) throws Exception;
 	
-	int replyCount(BoardVO vo);
+	int replyCount(BoardVO searchVO);
 	
 	void replyDelete(BoardVO vo) throws Exception;
 	
