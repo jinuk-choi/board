@@ -38,8 +38,8 @@
 		  <div class="form-group">
 		    <label class="control-label col-sm-2" for="">작성자:</label>
 		    <div class="col-sm-10">
-		      <input type="hidden" class="form-control" id="writer" name="writer" placeholder="등록자를 입력하세요" maxlength="15" style="float:left;width:30%" value="${boardVO.writer }">
-		      <input type="text" class="form-control" id="writerNm" name="writerNm" placeholder="등록자를 입력하세요" maxlength="15" style="float:left;width:30%" value="${boardVO.writerNm }">
+		    <p>  ${boardVO.writerNm}</p>
+		      <input type="hidden" class="form-control" id="writer" name="writer" maxlength="15" style="float:left;width:30%" value="${boardVO.writer }">
 		    </div>
 		  </div>
 		  

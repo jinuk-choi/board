@@ -38,7 +38,7 @@
 			  <div class="form-group">
 			    <label class="control-label col-sm-2" for="">작성자/작성일:</label>
 			    <div class="col-sm-10 control-label" style="text-align:left;">
-			 		<c:out value="${boardVO.writer}"/> / <c:out value="${boardVO.indate}"/>
+			 		<c:out value="${boardVO.writerNm}"/> / <c:out value="${boardVO.indate}"/>
 			    </div>
 			  </div>
 			  

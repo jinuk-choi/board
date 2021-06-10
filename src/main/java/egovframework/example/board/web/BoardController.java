@@ -94,10 +94,12 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/mgmt.do")
-	public String mgmt(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
-		list = boardService.selectBoardList(boardVO);
+	public String mgmt(@RequestParam("idx") int idx,
+			@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		
+		boardVO = boardService.selectBoard(idx);
 		model.addAttribute("boardVO", boardVO);
+
 		
 		return "board/mgmt";
 	}

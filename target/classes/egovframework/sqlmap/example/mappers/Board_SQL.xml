@@ -64,10 +64,16 @@
 
 <!-- 게시글 보기 -->
 	<select id="selectBoard" resultType="boardVo">
-
-			SELECT *
-			FROM TB_BOARD
-			WHERE IDX=#{idX}
+			SELECT
+				A.IDX as idx
+				  , A.TITLE as title
+				  , A.CONTENTS as contents
+				  , IFNULL(A.COUNT,0) as count
+				  , A.WRITER as writer
+				  , A.INDATE as indate
+				  , B.USER_NAME as writerNm
+			FROM TB_BOARD A LEFT JOIN TB_USER B ON A.WRITER = B.USER_ID
+			WHERE A.IDX=#{idx, jdbcType=VARCHAR}
 
 	</select>
 
