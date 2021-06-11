@@ -70,11 +70,11 @@
 				      <tr>
 				        <td><c:out value="${result.rownum}"/></td>
 				        <td>
-					        <c:if test="${list.aDepth > 1 }">
-								<c:forEach begin="2" end="${list.aDepth}">
+					        <c:if test="${result.aDepth > 1 }">
+								<c:forEach begin="2" end="${result.aDepth}">
 									&nbsp;&nbsp;
 								</c:forEach>
-								<c:forEach begin="2" end="${list.aDepth}">
+								<c:forEach begin="2" end="${result.aDepth}">
 									┕
 								</c:forEach>
 							</c:if>

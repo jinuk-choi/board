@@ -121,8 +121,8 @@ function mod(){
 	location.href = "<c:url value='/mgmt.do'/>?idx=${boardVO.idx}";
 }
 function add2(aDepth,aOrder,aGroup){
-	
-	location.href = "<c:url value='/mgmt.do'/>?idx=${boardVO.idx}&aDepth="+aDepth;
+
+	location.href = "<c:url value='/mgmt2.do'/>?aGroup=${boardVO.aGroup}&aDepth=${boardVO.aDepth}&aOrder="+aOrder;
 }
 function del(){
 	

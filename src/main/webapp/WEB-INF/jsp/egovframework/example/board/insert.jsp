@@ -79,7 +79,7 @@ function add(){
 		return;
 	}
 		
-	document.form1.action = "<c:url value='/insert.do'/>";
+	document.form1.action = "<c:url value='/insert.do'/>?aGroup=${boardVO.aGroup}&aDepth=${boardVO.aDepth}&aOrder=${boardVO.aOrder}";
 	document.form1.submit();
 }
 
