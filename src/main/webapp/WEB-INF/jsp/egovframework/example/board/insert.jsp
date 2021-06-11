@@ -24,8 +24,7 @@
 		</div>
 	</div>
 	<div class="panel-body">
-		<form class="form-horizontal" name="form1" method="post" action="">
-		<input type="hidden" name="idx" value="${boardVO.idx}">		
+		<form class="form-horizontal" name="form1" method="post" action="">	
 		  <div class="form-group">
 		    <label class="control-label col-sm-2" for="">제목</label>
 		    <div class="col-sm-10">
@@ -36,8 +35,8 @@
 		  <div class="form-group">
 		    <label class="control-label col-sm-2" for="">작성자:</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="writerNm" name="writerNm" maxlength="15" style="float:left;width:30%" value="${boardVO.writerNm }">
-		      <input type="hidden" class="form-control" id="writer" name="writer" maxlength="15" style="float:left;width:30%" value="${boardVO.writer }">
+		      <input type="text" class="form-control" id="writerNm" name="writerNm" maxlength="15" style="float:left;width:30%" value="${sessionScope.userName}">
+		      <input type="hidden" class="form-control" id="writer" name="writer" maxlength="15" style="float:left;width:30%" value="${sessionScope.userId}">
 		    </div>
 		  </div>
 		  
@@ -50,14 +49,11 @@
 		</form>
 	</div>
 	<div class="panel-footer">
-	<c:if test="${!empty sessionScope.userId }">
-   
-      <button type="button" class="btn btn-default" onclick="add();">등록</button>
-    
 
-      <button type="button" class="btn btn-default" onclick="mod();">수정</button>
-  
-    </c:if>
+
+      <button type="button" class="btn btn-default" onclick="add();">등록</button>
+
+    
       <button type="button" class="btn btn-default" onclick="cancel();">취소</button>
 	 </div>
 </div>
@@ -84,25 +80,6 @@ function add(){
 	}
 		
 	document.form1.action = "<c:url value='/insert.do'/>";
-	document.form1.submit();
-}
-function mod(){
-	if( $('#title').val() == '' ){
-		alert("제목을 입력하세요");
-		$('#title').focus();
-		return;
-	}
-	if( $('#contents').val() == '' ){
-		alert("내용을 입력하세요");
-		$('#contents').focus();
-		return;
-	}
-	
-	if( !confirm("수정하시겠습니까?") ){
-		return;
-	}
-	
-	document.form1.action = "<c:url value='/edit.do'/>";
 	document.form1.submit();
 }
 

@@ -46,7 +46,7 @@ public interface BoardMapper {
 	
 	void deleteBoard(BoardVO vo) throws Exception;
 
-	BoardVO selectBoard(int idx) throws Exception;
+	BoardVO selectBoard(BoardVO vo) throws Exception;
 
 	int selectBoardListTotCnt(BoardVO searchVO);
 	
@@ -67,6 +67,13 @@ public interface BoardMapper {
 	void updateComment(BoardVO vo) throws Exception;
 	
 	void updateReComment(BoardVO vo) throws Exception;
+	
+	void updateEdBoard(BoardVO vo) throws Exception;
+	
+	void updateReBoard(BoardVO vo) throws Exception;
+	
+	
+	
 
 
 }

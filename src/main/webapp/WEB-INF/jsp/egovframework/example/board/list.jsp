@@ -69,7 +69,17 @@
 				    <c:forEach var="result" items="${resultList}" varStatus="status">
 				      <tr>
 				        <td><c:out value="${result.rownum}"/></td>
-				        <td><a href="<c:url value='/view.do?idx=${result.idx}'/>"><c:out value="${result.title}"/></a></td>
+				        <td>
+					        <c:if test="${list.aDepth > 1 }">
+								<c:forEach begin="2" end="${list.aDepth}">
+									&nbsp;&nbsp;
+								</c:forEach>
+								<c:forEach begin="2" end="${list.aDepth}">
+									┕
+								</c:forEach>
+							</c:if>
+				        <a href="<c:url value='/view.do?idx=${result.idx}'/>"><c:out value="${result.title}"/></a>
+				        </td>
 				        <td><c:out value="${result.count}"/></td>
 				        <td><c:out value="${result.writerNm}"/></td>
 				        <td><c:out value="${result.indate}"/></td>
@@ -102,7 +112,7 @@ $( document ).ready(function() {
 });
 
 function add(){
-	location.href = "<c:url value='/mgmt.do'/>";
+	location.href = "<c:url value='/mgmt2.do'/>";
 }
 
 function view() {

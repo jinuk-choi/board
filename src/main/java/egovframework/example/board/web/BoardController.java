@@ -60,7 +60,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/view.do")
-	public String View(@RequestParam("idx") int idx,
+	public String View(
 					   @ModelAttribute("boardVO") BoardVO boardVO,
 					   ModelMap model) throws Exception {
 		
@@ -84,7 +84,7 @@ public class BoardController {
 		int totCnt = boardService.replyCount(boardVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		
-		boardVO = boardService.selectBoard(idx);
+		boardVO = boardService.selectBoard(boardVO);
 		boardService.BoardCount(boardVO);
 		
 		model.addAttribute("boardVO",boardVO);
@@ -93,24 +93,32 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	@RequestMapping(value = "/mgmt.do")
-	public String mgmt(@RequestParam("idx") int idx,
-			@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/mgmt.do", method = RequestMethod.GET)
+	public String mgmt(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		
-		boardVO = boardService.selectBoard(idx);
+		boardVO = boardService.selectBoard(boardVO);
 		model.addAttribute("boardVO", boardVO);
 
 		
 		return "board/mgmt";
 	}
 	
+	@RequestMapping(value = "/mgmt2.do")
+	public String mgmt2(@ModelAttribute("boardVO") BoardVO boardVO
+						,ModelMap model) throws Exception {
+		
+		model.addAttribute("boardVO", boardVO);
+
+		return "board/insert";
+	}
+
+	
 	@RequestMapping(value = "/insert.do")
 	public String Insert(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
 		boardService.insertBoard(boardVO);
-		list = boardService.selectBoardList(boardVO);
 		
 		model.addAttribute("resultList", list);
-		model.addAttribute("board", boardVO);
+		model.addAttribute("boardVO", boardVO);
 		
 		return "redirect:/list.do";
 	}

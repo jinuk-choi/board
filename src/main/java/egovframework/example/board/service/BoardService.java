@@ -28,7 +28,7 @@ public interface BoardService {
 	
 	void deleteBoard(BoardVO vo) throws Exception;
 
-	BoardVO selectBoard(int idx) throws Exception;
+	BoardVO selectBoard(BoardVO vo) throws Exception;
 	
 	int selectBoardListTotCnt(BoardVO searchVO);
 	

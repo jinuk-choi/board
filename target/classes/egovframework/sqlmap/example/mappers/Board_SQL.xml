@@ -14,6 +14,9 @@
 				  , A.WRITER as writer
 				  , A.INDATE as indate
 				  , B.USER_NAME as writerNm
+				  , A.A_GROUP as aGroup
+				  , A.a_depth as aDepth
+				  , A.a_order as aOrder 
 			FROM 	TB_BOARD A
 			LEFT JOIN TB_USER B ON A.WRITER = B.USER_ID,
 					(SELECT @rownum := (SELECT	COUNT(*)-#{firstIndex}+1 FROM tb_board A)) tc		
@@ -23,6 +26,7 @@
 							OR	A.CONTENTS LIKE CONCAT('%',#{searchKeyword},'%')
 							)
 			</if>
+			ORDER BY				a_group DESC, a_order DESC	
 			LIMIT	#{firstIndex}, #{recordCountPerPage}
 		
 	</select>
@@ -34,13 +38,30 @@
 			INSERT INTO TB_BOARD
 				(   WRITER
 				  , TITLE
-				  , CONTENTS )
+				  , CONTENTS
+				  , writerNm
+				  , a_group
+				  , a_order
+				  , a_depth )
 			VALUES (#{writer}
 				  , #{title}
-				  , #{contents} )
-
+				  , #{contents}
+				  , #{writerNm} 
+				  , #{aGroup}
+				  , #{aOrder}
+				  , #{aDepth} + 1 )
+			
+			<selectKey keyProperty="idx" resultType="Integer">
+	       		SELECT LAST_INSERT_ID()
+	   		</selectKey>	
 	</insert>
-	
+	<update id="updateEdBoard" parameterType="boardVO" >
+		UPDATE tb_board SET a_group = LAST_INSERT_ID() WHERE idx = LAST_INSERT_ID()
+	</update>
+
+	<update id="updateReBoard" parameterType="boardVO" >
+		UPDATE tb_board SET a_order = a_order + 1 where a_group = #{aGroup} and a_order >= #{aOrder} and idx != last_insert_id() 
+	</update> 
 	
 <!-- 게시글 수정하기 -->
 	<update id="updateBoard">
@@ -72,6 +93,9 @@
 				  , A.WRITER as writer
 				  , A.INDATE as indate
 				  , B.USER_NAME as writerNm
+				  , A.A_GROUP as aGroup
+				  , A.a_depth as aDepth
+				  , A.a_order as aOrder 
 			FROM TB_BOARD A LEFT JOIN TB_USER B ON A.WRITER = B.USER_ID
 			WHERE A.IDX=#{idx, jdbcType=VARCHAR}
 
@@ -180,6 +204,7 @@
 			WHERE 1=1
 			AND USER_ID = #{userId}
 			AND PASSWORD = #{password}
+			
 	
 	</select>
 

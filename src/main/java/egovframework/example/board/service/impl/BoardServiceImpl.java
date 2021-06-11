@@ -42,7 +42,14 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		LOGGER.debug(vo.toString());
 
 		boardDAO.insertBoard(vo);
-		return vo.getIdx();
+		
+		
+		if (vo.getaGroup() ==0) {
+			boardDAO.updateEdBoard(vo);	
+		} else {
+			boardDAO.updateReBoard(vo);
+		} return Integer.toString(vo.getIdx());
+		
 	}
 	
 	public void updateBoard(BoardVO vo) throws Exception {
@@ -55,8 +62,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	}
 
 	
-	public BoardVO selectBoard(int idx) throws Exception {
-		return boardDAO.selectBoard(idx);
+	public BoardVO selectBoard(BoardVO vo) throws Exception {
+		return boardDAO.selectBoard(vo);
 	}
 	
 	public int selectBoardListTotCnt(BoardVO searchVO) {

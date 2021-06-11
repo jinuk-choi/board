@@ -19,7 +19,7 @@ import egovframework.example.sample.service.SampleDefaultVO;
 
 public class BoardVO  extends SampleDefaultVO  {
 
-	private String idx;
+	private int idx;
 	private String title;
 	private String contents;
 	private int count;
@@ -27,6 +27,10 @@ public class BoardVO  extends SampleDefaultVO  {
 	private String writerNm;
 	private String indate;
 	private int rownum;
+	private int aDepth;
+	private int aOrder;
+	private int aGroup;
+	
 	
 	private String userId;
 	private String password;
@@ -69,10 +73,10 @@ public class BoardVO  extends SampleDefaultVO  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getIdx() {
+	public int getIdx() {
 		return idx;
 	}
-	public void setIdx(String idx) {
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
 	public String getTitle() {
@@ -140,6 +144,24 @@ public class BoardVO  extends SampleDefaultVO  {
 	}
 	public void setbGroup(int bGroup) {
 		this.bGroup = bGroup;
+	}
+	public int getaDepth() {
+		return aDepth;
+	}
+	public void setaDepth(int aDepth) {
+		this.aDepth = aDepth;
+	}
+	public int getaOrder() {
+		return aOrder;
+	}
+	public void setaOrder(int aOrder) {
+		this.aOrder = aOrder;
+	}
+	public int getaGroup() {
+		return aGroup;
+	}
+	public void setaGroup(int aGroup) {
+		this.aGroup = aGroup;
 	}
 
 	

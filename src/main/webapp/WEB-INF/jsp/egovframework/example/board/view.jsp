@@ -51,6 +51,7 @@
 			</form>	
 		</div>
 		 <div class="panel-footer">
+		 	<button type="button" class="btn btn-default" onclick="add2('${boardVO.aDepth}','${boardVO.aOrder}','${boardVO.aGroup}');">답글</button>
 			<button type="button" class="btn btn-default" onclick="mod();">수정</button>
       		<button type="button" class="btn btn-default" onclick="del();">삭제</button>
 			<button type="button" class="btn btn-default" onclick="list();">목록</button>
@@ -118,6 +119,10 @@ function list() {
 
 function mod(){
 	location.href = "<c:url value='/mgmt.do'/>?idx=${boardVO.idx}";
+}
+function add2(aDepth,aOrder,aGroup){
+	
+	location.href = "<c:url value='/mgmt.do'/>?idx=${boardVO.idx}&aDepth="+aDepth;
 }
 function del(){
 	
