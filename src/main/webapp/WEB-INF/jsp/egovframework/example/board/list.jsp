@@ -20,34 +20,7 @@
 <div class="container">
 	<h1>메인화면</h1>
 	<div class="panel panel-default">
-		<div class="panel-heading">
-		<c:if test="${sessionScope == null || sessionScope.userId == null || sessionScope.userId == '' }">
-			<form class="form-inline" method="post" action="<c:url value='/login.do'/>">   
-			 	<div class="form-group">
-			    	<label for="user_id">ID:</label>
-			    	 <select class="form-control" id="user_id" name="user_id" onchange="setPwd(this.value);">
-				     	 <option value="">선택하세요</option>
-					     <option value="admin">관리자</option>
-					     <option value="guest">사용자</option>
-					     <option value="guest2">사용자2</option>
-					 </select>
-			 	</div>
-			 	
-				<div class="form-group">				
-			    	<label for="password">Password:</label>
-			    	<input type="password" class="form-control" id="password" name="password">
-			  	</div>		
-					 <button type="submit" class="btn btn-default" onclick="return check()">로그인</button>
-			</form>	
-			&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;
-			<button type="submit" class="btn btn-default" onclick="user()">회원가입</button>
-			
-		</c:if>
-		<c:if test="${sessionScope != null && sessionScope.userId != null && sessionScope.userId != '' }">
-			${sessionScope.userName}님 환영합니다.
-			<button id="button"  onclick="out();">로그아웃</button>
-		</c:if>				 
-		</div>
+		
 			<div class="panel-body">
 			<form class="form-inline" method="post" action="<c:url value='/list.do'/>">
 		  		<div class="form-group">

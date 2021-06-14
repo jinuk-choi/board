@@ -32,6 +32,13 @@ public class BoardController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 	
+	@RequestMapping(value = "/index.do")
+	public String index(ModelMap model,HttpServletRequest request) throws Exception {
+		
+		
+		return "board/index";
+	}
+	
 	@RequestMapping(value = "/list.do")
 	public String list(ModelMap model,
 		@ModelAttribute("boardVO") BoardVO boardVO	) throws Exception {

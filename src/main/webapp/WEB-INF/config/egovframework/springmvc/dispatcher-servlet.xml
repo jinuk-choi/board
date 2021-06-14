@@ -47,8 +47,28 @@
         </property>
     </bean>
     
-    <!-- 메소드 시간 -->
-<bean id="printAdvice" class="egovframework.example.board.service.Advice"></bean>
+    <!-- 세션체크 -->
+<!-- <bean id="roleProcess" class="egovframework.example.board.service.SessionAdvice" />
+<aop:config>
+<aop:aspect id="roleAspect" ref="roleProcess">
+<aop:pointcut id="publicMethod" expression="execution(* egovframework.example..web.*Controller.*(..))"/>
+<aop:around pointcut-ref="publicMethod" method="aroundRoleProcess" />
+</aop:aspect>
+</aop:config> -->
+
+ <!-- 에러페이지 -->
+<!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+<property name="exceptionMappings">
+<props>
+<prop key="java.lang.Exception">index</prop>
+</props>
+</property>
+ <property name="exceptionAttribute" value="index" />
+ <property name="defaultErrorView" value="index" />
+</bean> -->
+   
+<!--     메소드 시간 -->
+<!-- <bean id="printAdvice" class="egovframework.example.board.service.Advice"></bean>
 
 <aop:config>
 	<aop:pointcut expression="execution(* egovframework.example..web.*Controller.*(..))"  id="allControlPointCut"/>
@@ -56,7 +76,25 @@
 	<aop:aspect ref="printAdvice">
    		<aop:around method="printMethodName" pointcut-ref="allControlPointCut"/>
 	</aop:aspect>
-</aop:config>
+</aop:config> -->
+
+<!--     세션 체크 -->
+	<aop:aspectj-autoproxy />
+		<bean id="Advice" class="egovframework.example.board.service.Advice">
+		</bean>
+	
+<!-- <bean id="guide" class="egovframework.example.board.service.Advice"></bean>
+	<aop:config>
+		<aop:aspect id="guideAspect" ref="guide">
+			실행하게될 범위를 설정한다
+			<aop:pointcut expression="execution(* egovframework.example..web.*Controller.*(..))" id="publicMethod" />
+			실행되는 모든 시점
+			<aop:around method="guide" pointcut-ref="publicMethod" />
+		</aop:aspect>
+	</aop:config>
+ -->
+
+
 
 
 
