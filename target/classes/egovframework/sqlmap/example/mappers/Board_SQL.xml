@@ -195,6 +195,19 @@
 	      
 </update>
 
+<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="boardVO">
+
+			INSERT INTO TB_USER
+				( user_id
+				  , PASSWORD
+				  , USER_NAME )
+			VALUES ( #{userId}
+				  , #{password}
+				  , #{user_name} )
+				
+	</insert>
+
 	
 <!-- 로그인 체크 -->	
 	<select id="selectLoginCheck" parameterType="boardVo" resultType="String">

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,7 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
+@EnableAspectJAutoProxy
 public class BoardController {
 	BoardVO boardVO = null;
 	List<?> list = null;
@@ -59,9 +61,11 @@ public class BoardController {
 		return "board/list";
 	}
 	
+
 	@RequestMapping(value = "/view.do")
 	public String View(
 					   @ModelAttribute("boardVO") BoardVO boardVO,
+					
 					   ModelMap model) throws Exception {
 		
 		/** EgovPropertyService.sample */
@@ -134,9 +138,12 @@ public class BoardController {
 		return "redirect:/list.do";
 	}
 	
+	
 	@RequestMapping(value = "/delete.do")
-	public String Delete(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String Delete(@ModelAttribute("boardVO") BoardVO boardVO, 
+			ModelMap model) throws Exception {
 		boardService.deleteBoard(boardVO);
+		
 		
 		model.addAttribute("board", boardVO);
 		
@@ -186,6 +193,21 @@ public class BoardController {
 		return "board/commentList";
 	}
 	
+	@RequestMapping(value = "/insertpage.do")
+	public String userInsertPage(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		
+		model.addAttribute("boardVO", boardVO);
+		
+		return "board/user";
+	}
+	
+	@RequestMapping(value = "/userinsert.do")
+	public String userInsert(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+		boardService.insertUser(boardVO);
+		model.addAttribute("boardVO", boardVO);
+		
+		return "redirect:/list.do";
+	}
 	
 	
 	

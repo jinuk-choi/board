@@ -45,5 +45,7 @@ public interface BoardService {
 	void replyDelete(BoardVO vo) throws Exception;
 	
 	void editComment(BoardVO vo) throws Exception;
+	
+	void insertUser(BoardVO vo) throws Exception;
 
 }

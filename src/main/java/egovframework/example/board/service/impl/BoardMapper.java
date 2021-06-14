@@ -72,6 +72,8 @@ public interface BoardMapper {
 	
 	void updateReBoard(BoardVO vo) throws Exception;
 	
+	void insertUser(BoardVO vo) throws Exception;
+	
 	
 	
 

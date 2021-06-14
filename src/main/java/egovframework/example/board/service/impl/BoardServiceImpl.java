@@ -107,6 +107,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		boardDAO.editComment(vo);
 	}
 
-	
+	public void insertUser(BoardVO vo) throws Exception {
+		boardDAO.insertUser(vo);
+	}
 
 }

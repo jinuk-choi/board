@@ -38,7 +38,10 @@
 			    	<input type="password" class="form-control" id="password" name="password">
 			  	</div>		
 					 <button type="submit" class="btn btn-default" onclick="return check()">로그인</button>
-			</form>
+			</form>	
+			&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;
+			<button type="submit" class="btn btn-default" onclick="user()">회원가입</button>
+			
 		</c:if>
 		<c:if test="${sessionScope != null && sessionScope.userId != null && sessionScope.userId != '' }">
 			${sessionScope.userName}님 환영합니다.
@@ -146,6 +149,10 @@ function out() {
 
 function page(pageNo){
 	location.href = "<c:url value='/list.do'/>?pageIndex="+pageNo;
+}
+
+function user() {
+	location.href = "<c:url value='/insertpage.do'/>";
 }
 
 </script>
