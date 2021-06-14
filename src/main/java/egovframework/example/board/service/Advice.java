@@ -8,12 +8,12 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 
-@Aspect
+//@Aspect
 public class Advice {
-	@Pointcut("execution(* egovframework.example..web.*Controller.*(..))")
-	private void test(){}
+	//@Pointcut("execution(* egovframework.example..web.*Controller.*(..))")
+	//private void test(){}
 	
-	@Around(value="test()")
+	//@Around(value="test()")
 
 	public Object trace(ProceedingJoinPoint joinPoint) throws Throwable{
 		HttpServletRequest request= null;
@@ -32,9 +32,9 @@ public class Advice {
 		if(!strUrl.endsWith("/index.do")){
 			//세션체킹
 			HttpSession session = request.getSession();
-			String loginId = (String) session.getAttribute("userId");
+			String userId = (String) session.getAttribute("userId");
 	
-			if(loginId == null || "".equals(loginId)){
+			if(userId == null || "".equals(userId)){
 	
 				return "로그인 페이지";
 

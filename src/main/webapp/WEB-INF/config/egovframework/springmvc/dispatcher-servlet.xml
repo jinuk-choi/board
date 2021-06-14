@@ -79,20 +79,18 @@
 </aop:config> -->
 
 <!--     세션 체크 -->
-	<aop:aspectj-autoproxy />
+	<!-- <aop:aspectj-autoproxy />
 		<bean id="Advice" class="egovframework.example.board.service.Advice">
-		</bean>
+		</bean> -->
 	
-<!-- <bean id="guide" class="egovframework.example.board.service.Advice"></bean>
+<bean id="guide" class="egovframework.example.board.service.Advice"></bean>
 	<aop:config>
-		<aop:aspect id="guideAspect" ref="guide">
-			실행하게될 범위를 설정한다
-			<aop:pointcut expression="execution(* egovframework.example..web.*Controller.*(..))" id="publicMethod" />
-			실행되는 모든 시점
-			<aop:around method="guide" pointcut-ref="publicMethod" />
+		<aop:pointcut expression="execution(* egovframework.example..web.*Controller.*(..))" id="publicMethod" />
+		<aop:aspect ref="guide">
+			<aop:around method="trace" pointcut-ref="publicMethod" />
 		</aop:aspect>
 	</aop:config>
- -->
+
 
 
 
