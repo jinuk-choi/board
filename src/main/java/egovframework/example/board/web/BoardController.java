@@ -41,6 +41,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/list.do")
 	public String list(ModelMap model,
+			HttpServletRequest request,
 		@ModelAttribute("boardVO") BoardVO boardVO	) throws Exception {
 		
 		/** EgovPropertyService.sample */
@@ -105,7 +106,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/mgmt.do", method = RequestMethod.GET)
-	public String mgmt(@ModelAttribute("boardVO") BoardVO boardVO, ModelMap model) throws Exception {
+	public String mgmt(@ModelAttribute("boardVO") BoardVO boardVO,
+						HttpServletRequest request,			
+						ModelMap model) throws Exception {
 		
 		boardVO = boardService.selectBoard(boardVO);
 		model.addAttribute("boardVO", boardVO);
@@ -116,6 +119,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/mgmt2.do")
 	public String mgmt2(@ModelAttribute("boardVO") BoardVO boardVO
+						,HttpServletRequest request
 						,ModelMap model) throws Exception {
 		
 		model.addAttribute("boardVO", boardVO);
@@ -148,6 +152,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/delete.do")
 	public String Delete(@ModelAttribute("boardVO") BoardVO boardVO, 
+			HttpServletRequest request,	
 			ModelMap model) throws Exception {
 		boardService.deleteBoard(boardVO);
 		

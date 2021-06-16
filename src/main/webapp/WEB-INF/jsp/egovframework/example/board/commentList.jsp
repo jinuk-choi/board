@@ -20,8 +20,22 @@
 				</c:if>
 				<c:out value="${fn:replace(result.reply, crcn, br)}" escapeXml="false"/>
 				<div><button type="button" class="btn-Insert">답글</button></div>
-				<div><button type="button" class="btn-Edit">수정</button></div>
-				<div><button type="button" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+				<c:choose>
+					<c:when test="${sessionScope.userName == result.writer }">
+						<div><button type="button" style="display:show;" class="btn-Edit">수정</button></div>
+					</c:when>
+					<c:otherwise>
+						<div><button type="button" style="display:none;" class="btn-Edit">수정</button></div>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${sessionScope.userName == result.writer }">
+						<div><button type="button" style="display:show;" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+					</c:when>
+					<c:otherwise>
+						<div><button type="button" style="display:none;" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="myFlex" style="display: none;">
 				<div>작성자 : ${result.writer}</div>&emsp;&emsp;
@@ -36,4 +50,4 @@
 					<div><a href="">취소</a></div>
 			</div>	
 		</c:forEach>
-</div>
+		</div>

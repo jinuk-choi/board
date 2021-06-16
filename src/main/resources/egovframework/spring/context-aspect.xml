@@ -12,7 +12,10 @@
 		</aop:aspect>
 	</aop:config>
 
-
+<!--     세션 체크 -->
+	<aop:aspectj-autoproxy />
+		<bean id="Advice" class="egovframework.example.board.service.Advice">
+		</bean>
 
 
 

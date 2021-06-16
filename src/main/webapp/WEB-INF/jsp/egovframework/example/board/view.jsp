@@ -52,8 +52,23 @@
 		</div>
 		 <div class="panel-footer">
 		 	<button type="button" class="btn btn-default" onclick="add2('${boardVO.aDepth}','${boardVO.aOrder}','${boardVO.aGroup}');">답글</button>
-			<button type="button" class="btn btn-default" onclick="mod();">수정</button>
-      		<button type="button" class="btn btn-default" onclick="del();">삭제</button>
+		 		<c:choose>
+					<c:when test="${sessionScope.userName == boardVO.writerNm }">
+						<button type="button" style="display:show;" class="btn btn-default" onclick="mod();">수정</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" style="display:none;" class="btn btn-default" onclick="mod();">수정</button>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${sessionScope.userName == boardVO.writerNm }">
+						<button type="button" style="display:show;" class="btn btn-default" onclick="del();">삭제</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button"  style="display:none;" class="btn btn-default" onclick="del();">삭제</button>
+					</c:otherwise>
+				</c:choose>
+      		
 			<button type="button" class="btn btn-default" onclick="list();">목록</button>
 		 </div>
 		 <br>
@@ -71,8 +86,22 @@
 				</c:if>
 				<c:out value="${fn:replace(result.reply, crcn, br)}" escapeXml="false"/>
 				<div><button type="button" class="btn-Insert">답글</button></div>
-				<div><button type="button" class="btn-Edit">수정</button></div>
-				<div><button type="button" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+				<c:choose>
+					<c:when test="${sessionScope.userName == result.writer }">
+						<div><button type="button" style="display:show;" class="btn-Edit">수정</button></div>
+					</c:when>
+					<c:otherwise>
+						<div><button type="button" style="display:none;" class="btn-Edit">수정</button></div>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${sessionScope.userName == result.writer }">
+						<div><button type="button" style="display:show;" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+					</c:when>
+					<c:otherwise>
+						<div><button type="button" style="display:none;" class="btn-default" onclick="redel('${result.seq}',${result.idx});">삭제</button></div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<div class="myFlex" style="display: none;">
 				<div>작성자 : ${result.writer}</div>&emsp;&emsp;
